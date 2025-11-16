@@ -14,11 +14,20 @@ Before deploying (your commit with gh actions), make sure you
     sudo apt update && sudo apt upgrade
 
     wget -NP . https://dokku.com/install/v0.36.10/bootstrap.sh
-sudo DOKKU_TAG=v0.36.10 bash bootstrap.sh
+    sudo DOKKU_TAG=v0.36.10 bash bootstrap.sh
 
     cat ~/.ssh/authorized_keys | sudo dokku ssh-keys:add admin
+    ```
 
+    ```bash
     # you can use any domain you already have access to
     # this domain should have an A record or CNAME pointing at your server's IP
     dokku domains:set-global {your-domain-here-which-maps-to-ip}
+    ```
+
+    ```
+    # SSL
+    dokku plugin:install https://github.com/dokku/dokku-letsencrypt.git
+    dokku letsencrypt:set --global email rozeappletree.dev@gmail.com
+    dokku letsencrypt:cron-job --add
     ```
